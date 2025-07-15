@@ -1,0 +1,7 @@
+package com.college.yi.bookmanager.entity;
+
+
+@Data
+public class BookEntity {
+
+}

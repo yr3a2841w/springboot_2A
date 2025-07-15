@@ -1,0 +1,6 @@
+package com.college.yi.bookmanager.repository;
+
+@Mapper
+public class UserRepository {
+
+}

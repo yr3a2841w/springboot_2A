@@ -1,0 +1,6 @@
+package com.college.yi.bookmanager.service;
+
+@Service
+public class BookService {
+	
+}

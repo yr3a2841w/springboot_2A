@@ -1,0 +1,20 @@
+package com.college.yi.bookmanager.service;
+
+import org.springframework.stereotype.Service;
+
+import com.college.yi.bookmanager.entity.UserEntity;
+import com.college.yi.bookmanager.repository.UserRepository;
+
+@Service
+public class UserDetailsService {
+	
+	private final UserRepository userRepository;
+	public UserDetailsService(UserRepository userRepository) {
+		this.userRepository=userRepository;
+	}
+	
+	public UserEntity loadUserByUsername(String username) {
+		UserEntity user=userRepository.findByUsername(username);
+	}
+
+}

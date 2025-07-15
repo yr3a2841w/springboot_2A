@@ -1,0 +1,11 @@
+package com.college.yi.bookmanager.repository;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class BookRepository {
+
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+}

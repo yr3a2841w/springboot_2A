@@ -1,0 +1,21 @@
+package com.college.yi.bookmanager.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.college.yi.bookmanager.model.Book;
+
+@Service
+public class BookService {
+	
+	public List<Book> getBooks(){
+		List<Book> books=new ArrayList<>();
+		
+		Book book1=new Book();
+		
+		
+	}
+	
+}

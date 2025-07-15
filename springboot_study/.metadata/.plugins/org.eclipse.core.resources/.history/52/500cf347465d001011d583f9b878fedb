@@ -1,0 +1,67 @@
+package com.college.yi.bookmanager.service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.college.yi.bookmanager.model.Book;
+
+@Service
+public class BookService {
+	
+	public List<Book> getBooks(){
+		List<Book> books=new ArrayList<>();
+		
+		Book book1=new Book();
+		book1.setId("A1");
+		book1.setTitle("白夜行");
+		book1.setAuthor("東野圭吾");
+		book1.setPublisher("集英社");
+		book1.setPublishedDate(LocalDate.of(1997, 8, 1));
+		book1.setStock(1);
+		
+		Book book2=new Book();
+		book2.setId("A2");
+		book2.setTitle("容疑者Xの献身");
+		book2.setAuthor("東野圭吾");
+		book2.setPublisher("文芸誌");
+		book2.setPublishedDate(LocalDate.of(2005, 8, 30));
+		book2.setStock(4);
+		
+		Book book3=new Book();
+		book3.setId("A3");
+		book3.setTitle("海辺のカフカ");
+		book3.setAuthor("村上春樹");
+		book3.setPublisher("新潮社");
+		book3.setPublishedDate(LocalDate.of(2002, 9, 12));
+		book3.setStock(9);
+		
+		Book book4=new Book();
+		book4.setId("A4");
+		book4.setTitle("火車");
+		book4.setAuthor("宮部みゆき");
+		book4.setPublisher("双葉社");
+		book4.setPublishedDate(LocalDate.of(1992, 7, 15));
+		book4.setStock(16);
+		
+		Book book5=new Book();
+		book5.setId("A5");
+		book5.setTitle("蝉しぐれ");
+		book5.setAuthor("藤沢周平");
+		book5.setPublisher("文藝春秋");
+		book5.setPublishedDate(LocalDate.of(1988, 5, 11));
+		book5.setStock(25);
+		
+		books.add(book1);
+		books.add(book2);
+		books.add(book3);
+		books.add(book4);
+		books.add(book5);
+		
+		return books;
+		
+	}
+	
+}

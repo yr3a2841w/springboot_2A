@@ -1,0 +1,16 @@
+package com.college.yi.bookmanager.service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.college.yi.bookmanager.model.Book;
+
+@Service
+public class BookService {
+	
+	
+	
+}

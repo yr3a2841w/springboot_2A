@@ -1,0 +1,11 @@
+package com.college.yi.bookmanager.repository;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface BookRepository {
+
+	@Select("SELECT * FROM books")
+	List<BookEntity> findAllBook();
+	
+}

@@ -1,0 +1,14 @@
+package com.college.yi.bookmanager.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserDetailsService {
+	
+	private final UserRepository userRepository;
+	public UserDetailsService(UserRepository userRepository) {
+		this.userRepository=userRepository;
+	}
+	
+
+}

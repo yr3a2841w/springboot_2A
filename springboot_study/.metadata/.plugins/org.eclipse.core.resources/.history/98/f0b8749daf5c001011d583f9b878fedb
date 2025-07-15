@@ -1,0 +1,20 @@
+package com.college.yi.bookmanager.controller;
+
+import com.college.yi.bookmanager.service.BookService;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class BookController {
+
+	private final BookService bookService;
+	
+	public BookController(BookService bookservice) {
+		this.bookService=bookService;
+	}
+	
+	@GetMapping("/api/books")
+	public List<Book> getBooks(){
+		return bookService.getBooks();
+	}
+	
+}

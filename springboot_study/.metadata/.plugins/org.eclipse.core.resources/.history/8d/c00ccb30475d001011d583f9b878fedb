@@ -1,0 +1,23 @@
+package com.college.yi.bookmanager.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.college.yi.bookmanager.entity.BookEntity;
+import com.college.yi.bookmanager.repository.BookRepository;
+
+@Service
+public class BookService {
+	
+	private final BookRepository repository;
+	
+	public BookService(BookRepository repository) {
+		this.repository=repository;
+	}
+	
+	public List<BookEntity> getAllBooks(){
+		return repository.findAllBook();
+	}
+	
+}

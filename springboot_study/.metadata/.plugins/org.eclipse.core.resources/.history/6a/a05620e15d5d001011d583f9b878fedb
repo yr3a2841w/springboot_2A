@@ -1,0 +1,52 @@
+package com.college.yi.bookmanager.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.college.yi.bookmanager.entity.BookEntity;
+import com.college.yi.bookmanager.model.Book;
+import com.college.yi.bookmanager.repository.BookRepository;
+
+@Service
+public class BookService {
+	
+	private final BookRepository repository;
+	
+	public BookService(BookRepository repository) {
+		this.repository=repository;
+	}
+	
+	public List<BookEntity> getBooks(){
+		return repository.findAllBook();
+	}
+	
+	public Book createBook(Book modelBook) {
+		BookEntity entityBook=convert(modelBook);
+		repository.insert(entityBook);
+		return entityBook;
+	}
+	
+	public BookEntity updateBook(int id,BookEntity book) {
+		book.setId(id);
+		repository.update(book);
+		return book;
+	}
+	
+	public void deleteBook(int id) {
+		repository.delete(id);
+	}
+	
+	public BookEntity convert(Book modelBook) {
+		BookEntity entityBook=new BookEntity();
+		entityBook.setId(entityBook.getId());
+		entityBook.setTitle(entityBook.getTitle());
+		entityBook.setAuthor(entityBook.getAuthor());
+		entityBook.setPublisher(entityBook.getPublisher());
+		entityBook.setPublishedDate(entityBook.getPublishedDate());
+		entityBook.setStock(entityBook.getStock());
+		
+		return entityBook;
+	}
+	
+}

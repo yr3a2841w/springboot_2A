@@ -1,0 +1,16 @@
+package com.college.yi.bookmanager.repository;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import com.college.yi.bookmanager.entity.UserEntity;
+
+@Mapper
+public interface UserRepository {
+	
+	@Select("SELECT id,username,password,role,enabled")
+	List<UserEntity> findAllUser();
+
+}

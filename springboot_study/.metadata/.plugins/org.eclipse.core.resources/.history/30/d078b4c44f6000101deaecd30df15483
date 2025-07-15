@@ -1,0 +1,49 @@
+package com.college.yi.bookmanager.repository;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.college.yi.bookmanager.entity.BookEntity;
+
+@Mapper
+public interface BookRepository {
+
+	@Select("SELECT * FROM books")
+	@Results({
+	    @Result(property = "id", column = "id"),
+	    @Result(property = "title", column = "title"),
+	    @Result(property = "author", column = "author"),
+	    @Result(property = "publisher", column = "publisher"),
+	    @Result(property = "publishedDate", column = "published_date"), 
+	    @Result(property = "stock", column = "stock")
+	})
+	List<BookEntity> findAllBook();
+	
+	@Select("SELECT * FROM books WHERE id=#{id}")
+	@Results({
+	    @Result(property = "id", column = "id"),
+	    @Result(property = "title", column = "title"),
+	    @Result(property = "author", column = "author"),
+	    @Result(property = "publisher", column = "publisher"),
+	    @Result(property = "publishedDate", column = "published_date"),
+	    @Result(property = "stock", column = "stock")
+	})
+	BookEntity findById(int id);
+	
+	@Insert("INSERT INTO books(title,author,publisher,published_date,stock) values (#{title},#{author},#{publisher},#{publishedDate},#{stock})")
+	void insert(BookEntity book);
+	
+	@Update("UPDATE books SET title=#{title},author=#{author},publisher=#{publisher},published_date=#{publishedDate},stock=#{stock} WHERE id=#{id}")
+	void update(BookEntity book);
+	
+	@Delete("DELETE FROM books WHERE id=#{id}")
+	void delete(int id);
+	
+}

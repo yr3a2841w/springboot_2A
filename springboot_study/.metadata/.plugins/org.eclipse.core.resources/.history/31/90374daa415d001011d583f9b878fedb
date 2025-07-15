@@ -1,0 +1,10 @@
+package com.college.yi.bookmanager.repository;
+
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public class BookRepository {
+
+	
+	
+}

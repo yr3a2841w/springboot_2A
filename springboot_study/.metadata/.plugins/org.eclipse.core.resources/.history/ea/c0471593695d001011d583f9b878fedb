@@ -1,0 +1,75 @@
+package com.college.yi.bookmanager.service;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.college.yi.bookmanager.entity.BookEntity;
+import com.college.yi.bookmanager.model.Book;
+import com.college.yi.bookmanager.repository.BookRepository;
+
+@Service
+public class BookService {
+	
+	private final BookRepository repository;
+	
+	public BookService(BookRepository repository) {
+		this.repository=repository;
+	}
+	
+	public List<Book> getBooks(){
+		List<BookEntity> entity= repository.findAllBook();
+		if(entity.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}else {
+			List<Book> entityBook=
+			return entity.stream().map(convertModel());
+		}
+	}
+	
+	public Book createBook(Book modelBook) {
+		BookEntity entityBook=convertEntity(modelBook);
+		repository.insert(entityBook);
+		return modelBook;
+	}
+	
+	public Book updateBook(int id,Book modelBook) {
+		BookEntity entityBook=convertEntity(modelBook);
+		entityBook.setId(id);
+		repository.update(entityBook);
+		return modelBook;
+	}
+	
+	public void deleteBook(int id) {
+		repository.delete(id);
+	}
+	
+	public BookEntity convertEntity(Book modelBook) {
+		BookEntity entityBook=new BookEntity();
+		entityBook.setId(modelBook.getId());
+		entityBook.setTitle(modelBook.getTitle());
+		entityBook.setAuthor(modelBook.getAuthor());
+		entityBook.setPublisher(modelBook.getPublisher());
+		entityBook.setPublishedDate(modelBook.getPublishedDate());
+		entityBook.setStock(modelBook.getStock());
+		
+		return entityBook;
+	}
+		
+	public Book convertModel(Book entityBook) {
+		Book modelBook=new Book();
+		modelBook.setId(entityBook.getId());
+		modelBook.setTitle(entityBook.getTitle());
+		modelBook.setAuthor(entityBook.getAuthor());
+		modelBook.setPublisher(entityBook.getPublisher());
+		modelBook.setPublishedDate(entityBook.getPublishedDate());
+		modelBook.setStock(entityBook.getStock());	
+		
+		return modelBook;
+	}
+	
+	
+	
+}
