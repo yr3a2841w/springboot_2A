@@ -17,6 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	private final UserRepository userRepository;
 	
+	@Override
 	public UserDetails loadUserByUsername(String username) {
 		UserEntity user=userRepository.findByUsername(username);
 		
@@ -25,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		}else {
 			User.UserBuilder builder = User.withUsername(user.getUsername());
 			
-			builder.password("{noop}"+user.getPassword());
+			builder.password(user.getPassword());
 			builder.roles(user.getRole());
 			builder.disabled(!user.isEnabled());
 			
