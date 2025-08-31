@@ -23,15 +23,26 @@
 
     <h1>Book List</h1>
 
+	<h2>検索条件</h2>
+	<form onsubmit="onSearch(event)" id="search-form">
+		<input type="text" id="search-title" placeholder="タイトル">
+		<input type="text" id="search-author" placeholder="著者">
+		<input type="text" id="search-publisher" placeholder="出版社">
+		<input type="number" id="search-minStock" placeholder="在庫数以上">
+		<input type="text" id="search-publishedDate" placeholder="出版日（例：2025、2025-08）">
+		<button type="submit">検索</button>
+		<button type="button" onclick="resetSearch()">リセット</button>
+	</form>
+	
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                <th>タイトル</th>
-                <th>著者</th>
-                <th>出版社</th>
-                <th>出版日</th>
-                <th>在庫数</th>
+                <th onclick="sortTable('title')">タイトル</th>
+                <th onclick="sortTable('author')">著者</th>
+                <th onclick="sortTable('publisher')">出版社</th>
+                <th onclick="sortTable('publishedDate')">出版日</th>
+                <th onclick="sortTable('stock')">在庫数</th>
                 <th sec:authorize="hasRole('ADMIN')">操作</th>
             </tr>
         </thead>
@@ -62,12 +73,16 @@
 	</script>
 	
     <script>
+		let currentParams=new URLSearchParams();
+		
         // 書籍一覧取得
-        fetch('/api/books')
+		function fetchBooks(queryString=''){
+        fetch('/api/books/search'+(queryString ? '?'+queryString:''))
             .then(response => response.json())
             .then(books => {
 				const isAdmin=currentUserRoles.some(role=>role.authority==='ROLE_ADMIN');
                 let tbody = document.getElementById('book-table-body');
+				tbody.innerHTML='';
                 books.forEach(book => {
                     let row = `<tr>
                         <td>${book.id}</td>
@@ -91,6 +106,7 @@
                 });
             })
             .catch(error => console.error('Error fetching books:', error));
+			}
 
         // 書籍新規登録
         document.getElementById('book-form').addEventListener('submit', function(event) {
@@ -157,6 +173,55 @@
                 .catch(error => console.error('Error deleting book:', error));
             }
         }
+		
+		// リセットボタン
+		function resetSearch(){
+			document.getElementById('search-form').reset();
+			currentParams=new URLSearchParams();
+			fetchBooks();
+		}
+		
+		//ソート機能
+		function sortTable(field){
+			const currentSort=currentParams.get("sort");
+			let newSort;
+
+				if (currentSort === field) {
+					newSort = field + "_desc";
+				} else if (currentSort === field + "_desc") {
+					newSort = field; 
+				} else {
+					newSort = field;
+				}
+				
+			currentParams.set("sort",newSort);
+			fetchBooks(currentParams.toString());
+		}
+		
+		window.onload=()=>{
+			fetchBooks();
+		}
+		
+		// 書籍検索
+		function onSearch(event){
+			event.preventDefault();
+			
+			const title=document.getElementById('search-title').value;
+			const author=document.getElementById('search-author').value;
+			const publisher=document.getElementById('search-publisher').value;
+			const minStock=document.getElementById('search-minStock').value;
+			const publishedDate=document.getElementById('search-publishedDate').value;
+			
+			const params=new URLSearchParams();
+			if(title) params.set('title',title);
+			if(author) params.set('author',author);
+			if(publisher) params.set('publisher',publisher);
+			if(minStock) params.set('minStock',minStock);
+			if(publishedDate) params.set('publishedDate',publishedDate);
+
+			currentParams=params;
+			fetchBooks(currentParams.toString());
+		}
     </script>
 
 </body>

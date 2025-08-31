@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.college.yi.bookmanager.model.Book;
@@ -24,24 +25,30 @@ public class BookController {
 		this.bookService=bookService;
 	}
 	
-	@GetMapping
-	public List<Book> getBooks(){
-		return bookService.getBooks();
-	}
-	
 	@PostMapping
 	public Book createBook(@RequestBody Book modelBook) {
 		return bookService.createBook(modelBook);
 	}
 	
 	@PutMapping("/{id}")
-	public Book pudateBook(@PathVariable int id,@RequestBody Book modelBook) {
+	public Book updateBook(@PathVariable int id,@RequestBody Book modelBook) {
 		return bookService.updateBook(id,modelBook);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void deleteBook(@PathVariable int id) {
 		bookService.deleteBook(id);
+	}
+	
+	@GetMapping("/search")
+	public List<Book> searchBooks(@RequestParam(required=false) String title,
+								@RequestParam(required=false) String author,
+								@RequestParam(required=false) String publisher,
+								@RequestParam(required=false) Integer minStock,
+								@RequestParam(required=false) String publishedDate){
+		
+		return bookService.searchBooks(title, author, publisher, minStock, publishedDate);
+		
 	}
 	
 }

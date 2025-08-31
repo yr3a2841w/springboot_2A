@@ -46,6 +46,29 @@ public class BookService {
 		repository.delete(id);
 	}
 	
+	public List<Book> searchBooks(String title, String author, String publisher, Integer minStock, String publishedDate) {
+	    
+	    if (title != null && title.isEmpty()) title = null;
+	    if (author != null && author.isEmpty()) author = null;
+	    if (publisher != null && publisher.isEmpty()) publisher = null;
+
+	    String publishedDatePattern = null;
+	    if (publishedDate != null && !publishedDate.isEmpty()) {
+	        if (publishedDate.matches("\\d{4}")) {
+	            publishedDatePattern = "yyyy";
+	        } else if (publishedDate.matches("\\d{4}-\\d{2}")) {
+	            publishedDatePattern = "yyyy-MM";
+	        } else if (publishedDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+	            publishedDatePattern = "yyyy-MM-dd";
+	        } else {
+	            throw new IllegalArgumentException("出版日形式が不正です");
+	        }
+	    }
+
+	    List<BookEntity> searchResult = repository.searchBooks(title, author, publisher, minStock, publishedDate, publishedDatePattern);
+	    return searchResult.stream().map(this::convertModel).collect(Collectors.toList());
+	}
+	
 	public BookEntity convertEntity(Book modelBook) {
 		BookEntity entityBook=new BookEntity();
 		entityBook.setId(modelBook.getId());
@@ -69,7 +92,5 @@ public class BookService {
 		
 		return modelBook;
 	}
-	
-	
 	
 }
